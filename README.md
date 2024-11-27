@@ -1,4 +1,4 @@
-# Paper_Trading_POC
+# Streamlit inital implmentation
 
 Repo contains all the code for Paper Trading.
 
