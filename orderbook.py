@@ -26,8 +26,8 @@ class Trade(BaseModel):
 
 
 class PnLManager:
-    def __init__(self, initial_capital: float):
-        self.capital = initial_capital
+    def __init__(self, capital: float):
+        self.capital = capital
         self.realized_pnl = 0.0
         self.unrealized_pnl = 0.0
 
@@ -71,7 +71,7 @@ class OrderBook:
         self._lock = asyncio.Lock()  # Prevent concurrent modification
         self.trade_history: List[Trade] = []  # Store executed trades
         self.market_price = 100.0  # Initial market price
-        self.pnl_manager = PnLManager(initial_capital=10000.0)
+        self.pnl_manager = PnLManager(capital=100000.0)
 
     async def add_limit_order(self, order_data: dict):
         """Add a limit order to the order book."""
@@ -120,7 +120,7 @@ class OrderBook:
             if -buy_price < sell_price:
                 break  # No match possible
 
-            matched_quantity = min(buy_order.quantity, sell_order.quantity)
+            matched_quantity = min(buy_order.quantity, sell_order.quantity) 
             self._execute_trade(buy_order, sell_order, sell_price, matched_quantity)
 
     def _execute_trade(self, buy_order: Optional[Order], sell_order: Optional[Order], price: float, quantity: int):
@@ -148,6 +148,19 @@ class OrderBook:
                 heapq.heappop(self._sell_orders)
                 self._order_map.pop(sell_order.id, None)
             self.pnl_manager.update_for_trade(trade, "sell")
+
+    def display(self):
+        """Return a structured summary of the order book."""
+        buy_orders = [{"price": -price, "quantity": order.quantity} for price, _, order in self._buy_orders]
+        sell_orders = [{"price": price, "quantity": order.quantity} for price, _, order in self._sell_orders]
+        pnl_summary = self.pnl_manager.summary()
+        return {
+            "buy_orders": buy_orders,
+            "sell_orders": sell_orders,
+            "trade_history": [trade.dict() for trade in self.trade_history],
+            "pnl_summary": pnl_summary,
+        }
+
 
 
 class ConditionalOrderManager:
