@@ -1,2 +1,3 @@
-# Paper_Trading_POC
-Paper Trading POC
+# Redis Tests  
+
+Branch to test redis connection. Update values via server client architecture.
