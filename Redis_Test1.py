@@ -1,3 +1,7 @@
+#Tests connection to Redis 
+#Test to set capital and update it
+#And stores trade log
+
 import os
 import redis
 import asyncio
