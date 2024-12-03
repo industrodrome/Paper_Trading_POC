@@ -1,0 +1,35 @@
+# 1. Imports:
+FastAPI: Web framework to handle API endpoints.
+Redis: A key-value store used to persist order and capital data.
+uuid: To generate unique order IDs.
+json: For serializing data to/from JSON format.
+datetime: For timestamping orders and trades.
+logging: To log server activity.
+pydantic: For data validation models (e.g., Order, CapitalUpdate).
+
+# 2. Redis Connection Setup:
+The connection details (REDIS_HOST, REDIS_PORT, etc.) are provided to connect the FastAPI server to a Redis instance.
+db is initialized as a Redis client to interact with Redis.
+
+# 3. FastAPI App Setup:
+The app is initialized with the title and version.
+
+# 4. Pydantic Models:
+Order: Defines the structure for user orders with attributes such as username, type (buy/sell), price, and quantity.
+CapitalUpdate: Defines the structure for updating a user's capital.
+
+# 5. API Endpoints:
+/update_capital/: Updates a user's capital. If the capital is negative, it raises a 400 HTTP error.
+/get_capital/{username}: Retrieves the capital for a specific user.
+/add_order/: Allows users to add orders. It stores buy/sell orders in Redis and matches them if possible.
+/order_book/: Retrieves the buy and sell orders in the system.
+/trade_history/: Retrieves the trade history.
+/order_book/{username}: Retrieves buy and sell orders for a specific user.
+/trade_history/{username}: Retrieves the trade history for a specific user.
+
+# 6. Order Matching Logic (match_orders function):
+Buy and Sell Orders: It compares the highest buy order with the lowest sell order.
+If a match is found (buy price >= sell price), a trade occurs.
+Trade Execution: The trade is processed by updating both the buyer's and seller's capital and creating a trade record in the trade history.
+Order Update: Once a trade is made, the quantities of buy and sell orders are updated. Fully matched orders are removed from the order book.
+Capital Check: Before executing a trade, the buyer's capital is checked to ensure they can afford the trade.
