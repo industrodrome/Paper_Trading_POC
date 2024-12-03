@@ -1,4 +1,4 @@
-# 1. Imports:
+#1. Imports:
 FastAPI: Web framework to handle API endpoints.
 Redis: A key-value store used to persist order and capital data.
 uuid: To generate unique order IDs.
