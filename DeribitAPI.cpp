@@ -1,7 +1,7 @@
 //Contains Deribit Class
 //Connection to Deribit via API sends requests using HTTP
 
-/**
+
 
 #include <iostream>
 #include <string>
@@ -567,4 +567,3 @@ int main() {
     return 0;
 }
 
-**/
