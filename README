@@ -1,4 +1,4 @@
-Steps to run the Server and Client using Docker
+# Steps to run the Server and Client using Docker
 
 1) Download, install and run Docker Desktop
 2) Open CMD, navigate to directory where files are stored
