@@ -1,0 +1,11 @@
+Steps to run the Server and Client using Docker
+
+1) Download, install and run Docker Desktop
+2) Open CMD, navigate to directory where files are stored
+3) Run command -> docker build -t multithreaded-server -f Dockerfile.server .     (to build image for server the "dot" is necessary)
+  Run command -> docker run -p 8080:8080 multithreaded-server  (to run server [Run Server and Client in different terminals])
+4) Run command -> docker build -t multithreaded-client -f Dockerfile.client .    (for client)
+   Run command -> docker run -it --network host multithreaded-client      [Run client]
+                                                                                 
+
+
