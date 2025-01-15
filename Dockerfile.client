@@ -1,0 +1,21 @@
+# Use Debian as the base image
+FROM debian:bullseye
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Install required dependencies
+RUN apt-get update && apt-get install -y \
+    g++ \
+    make \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy the client source code into the container
+COPY client.cpp .
+
+# Compile the client code
+RUN g++ -std=c++11 client.cpp -o client
+
+# Command to run the client
+CMD ["./client"]
