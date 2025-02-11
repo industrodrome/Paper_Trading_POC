@@ -1,0 +1,21 @@
+# Use GCC as the base image
+FROM gcc:latest
+
+# Install necessary dependencies
+RUN apt-get update && apt-get install -y \
+    cmake \
+    libhiredis-dev \
+    uuid-dev \  
+    && rm -rf /var/lib/apt/lists/*
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy source code to the container
+COPY redis_connection.cpp .
+
+# Compile the C++ application
+RUN g++ redis_connection.cpp -o redis_client -lhiredis -luuid
+
+# Run the compiled binary
+CMD ["./redis_client"]
